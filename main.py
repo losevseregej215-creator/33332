@@ -1,8 +1,10 @@
 import asyncio
 import json
 import logging
+import os
 import sqlite3
 
+from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
@@ -15,8 +17,13 @@ from aiogram.types import (
 )
 
 # ==================== НАСТРОЙКИ ====================
-BOT_TOKEN = "ВАШ_ТОКЕН_СЮДА"
-DB_NAME = "dating.db"
+load_dotenv()
+
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+DB_NAME = os.getenv("DB_NAME", "dating.db")
+
+if not BOT_TOKEN:
+    raise ValueError("BOT_TOKEN не найден в .env файле!")
 
 logging.basicConfig(level=logging.INFO)
 
